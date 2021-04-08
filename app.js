@@ -4,7 +4,7 @@ const resetBtn = document.querySelectorAll('.btn-delete');
 const resetAll = document.querySelector('.btn-delete-all');
 
 // used for limiting relic level to a certain value
-const restricted = document.querySelectorAll('.restricted');
+const relicLevelCapped = document.querySelectorAll('.restricted');
 
 
 // ------------------------ RELIC TEMPLATE ------------------------ \\
@@ -52,13 +52,15 @@ const magicBoostRelic = new Relic('magicBoostRelic', 1, 1, 0.2,'% to Magic Attac
 const goldRelic = new Relic('goldRelic', 1, 1, 1,'% Gold Find');
 const attackRelic = new Relic('attackRelic', 1, 1, 2,' Attack');
 const manaRelic = new Relic('manaRelic', 1, 1, 3,' MP');
+
+// Level Capped Relics
 const critChanceRelic = new RelicRestrictedLvl('critChanceRelic', 1, 1, 0.1,'% Crit Chance', 250);
 const critDmgRelic = new RelicRestrictedLvl('critDmgRelic', 1, 1, 0.5,'% Crit Damage', 250);
 const essenceRelic = new RelicRestrictedLvl('essenceRelic', 1, 1, 0.2,'% Essence Find', 100);
 const regenRelic = new RelicRestrictedLvl('regenRelic', 1, 1, 1,' HP Regen', 100);
 
-
-console.log(regenRelic);
+// Array of objects that can be accessible. Will do it tomorrow.
+const test = [healthRelic, physBoostRelic];
 
 const relicsDictionary = {
   healthRelic: 'relicHealthDescription',
@@ -67,6 +69,8 @@ const relicsDictionary = {
   goldRelic: 'relicGoldDescription',
   attackRelic: 'relicAttackDescription',
   manaRelic: 'relicManaDescription',
+
+  // Level Capped Relics
   critChanceRelic: 'relicCritChanceDescription',
   critDmgRelic: 'relicCritDmgDescription',
   essenceRelic: 'relicEssenceDescription',
@@ -80,32 +84,32 @@ function evalReplacer(obj){
 };
 
 
-// INPUT FIELD CALCULATION.
-// I WANNA MAKE IT SCALABLE, I'M AFRAID I WON'T UNDERSTAND WHAT I DID WHEN I LOOK BACK AT IT LMAO
-
+// INPUT FIELD CALCULATION. RECEIVE A VALUE IN ORDER TO CALCULATE IT FOR RELIC BONUS DESCRIPTION
 levelInput.forEach(item => {
 
     // use dictionary as a way to access relics' classes properties
-    for (const [key, value] of Object.entries(relicsDictionary)) {
+    for (const [relicClass, relicDescription] of Object.entries(relicsDictionary)) {
 
       // make it empty
       if (item.value.length == 0) { item.value = ``; }
 
-      // when empty set description to its relic multiplier and its relic description. eval(value) -> relicXxxxxxDescription. eval(key) -> xxxRelic
-      evalReplacer(value).innerText = `+${evalReplacer(key).multiplier}${evalReplacer(key).shortDescription}`;
+      // when empty set description to its relic multiplier and its relic description. eval(value) -> relicXxxxxxDescription. eval(relicClass) -> xxxRelic
+      evalReplacer(relicDescription).innerText = `+${evalReplacer(relicClass).multiplier}${evalReplacer(relicClass).shortDescription}`;
 
       // get each element with .level-input class
       item.addEventListener('input', updateValue => {
 
-        if (item.id == evalReplacer(key).name) { // check if it's equal to one of the relics' name
+        if (item.id == evalReplacer(relicClass).name) { // check if it's equal to one of the relics' name
         // insert values into specific relic description if true
-          evalReplacer(key).level = parseInt(updateValue.target.value);
+          evalReplacer(relicClass).level = parseInt(updateValue.target.value);
 
-          // if empty make it lvl 0, to avoid NaN
-          if (updateValue.target.value.length < 1) { evalReplacer(key).level = 1; };
+          // if empty make it lvl 1, to avoid NaN
+          if (updateValue.target.value.length < 1) { evalReplacer(relicClass).level = 1; };
 
-          evalReplacer(value).innerText = `+${evalReplacer(key).value()}${evalReplacer(key).shortDescription}`;
+          evalReplacer(relicDescription).innerText = `+${evalReplacer(relicClass).value()}${evalReplacer(relicClass).shortDescription}`;
+          // console.log(evalReplacer(relicClass));
         }
+
     })
   }
 })
@@ -114,16 +118,16 @@ levelInput.forEach(item => {
 // Reset level button
 resetBtn.forEach(btn => {
   btn.addEventListener('click', e => {
-    for (const [key, value] of Object.entries(relicsDictionary)) {
-      if (e.target.previousElementSibling.id == evalReplacer(key).name) {
+    for (const [relicClass, relicDescription] of Object.entries(relicsDictionary)) {
+      if (e.target.previousElementSibling.id == evalReplacer(relicClass).name) {
 
         // set relic lvl to 1
-        evalReplacer(key).level = 1;
+        evalReplacer(relicClass).level = 1;
 
         // go to the input element and set it to the lvl of the relic;
         e.target.previousElementSibling.value = '';
         // also set the bonus value to 0 as it is by default;
-        evalReplacer(value).innerText = `+${evalReplacer(key).multiplier}${evalReplacer(key).shortDescription}`;
+        evalReplacer(relicDescription).innerText = `+${evalReplacer(relicClass).multiplier}${evalReplacer(relicClass).shortDescription}`;
       }
     }
   })
@@ -138,14 +142,14 @@ const inputFieldsToDelete = document.getElementsByClassName('level-input')
 resetAll.addEventListener('click', () => {
   for (let i = 0; i < inputFieldsToDelete.length; i++) {
 
-    for (const prop in relicsDictionary) {
+    for (const relic in relicsDictionary) {
 
-      evalReplacer(prop).level = 1;
+      evalReplacer(relic).level = 1;
       // set to empty because there will be level 1, meaning if i type a number it will always be 142 i.e 1(the first index) won't be removed
       inputFieldsToDelete[i].value = '';
 
-      if (inputFieldsToDelete[i].parentNode.nextElementSibling.className == eval(relicsDictionary[prop]).className) {
-        evalReplacer(relicsDictionary[prop]).innerText = `+${evalReplacer(prop).multiplier}${evalReplacer(prop).shortDescription}`;
+      if (inputFieldsToDelete[i].parentNode.nextElementSibling.className == eval(relicsDictionary[relic]).className) {
+        evalReplacer(relicsDictionary[relic]).innerText = `+${evalReplacer(relic).multiplier}${evalReplacer(relic).shortDescription}`;
       }
     }
   }
@@ -159,18 +163,25 @@ resetAll.addEventListener('click', () => {
 });
 
 
-restricted.forEach(subRestricted => {
-  for (const [key, value] of Object.entries(relicsDictionary)) {
+// CHANGING INPUT VALUE IF IT BECOMES MORE THAN relicClass.maxLevel
+relicLevelCapped.forEach(lvlCapped => {
+  for (const [relicClass, relicDescription] of Object.entries(relicsDictionary)) {
 
-    subRestricted.addEventListener('input', () => {
-      console.log(key, value);
-      console.log(subRestricted.value > 200);
-      if (subRestricted.value > 250 || subRestricted.value < 0) {
-        subRestricted.value = evalReplacer(key).maxLevel;
-        relicRegenDescription.innerText = regenRelic.maxLevel;
-      } else {
-        subRestricted.value = 1;
+    lvlCapped.addEventListener('input', () => {
+      // console.log(lvlCapped.className);
+      // console.log(relicClass.name);
+      // console.log(lvlCapped.value > evalReplacer(relicClass).maxLevel);
+      if (lvlCapped.id == evalReplacer(relicClass).name) {
+        if (lvlCapped.value > evalReplacer(relicClass).maxLevel) {
+          lvlCapped.value = evalReplacer(relicClass).maxLevel;
+          evalReplacer(relicDescription).innerText = `+${evalReplacer(relicClass).maxLevel}${evalReplacer(relicClass).shortDescription}`;
+          // evalReplacer(relicClass).level = evalReplacer(relicClass).maxLevel;
+        }
+        // console.log(evalReplacer(relicClass).name);
+        // console.log(evalReplacer(relicClass).level);
       }
     })
   }
 })
+
+console.log(test[0]);
