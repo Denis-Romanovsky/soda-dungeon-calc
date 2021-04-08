@@ -1,0 +1,55 @@
+/* Relic of Health | +5HP per relic level for each party member.
+   Current Level: 41,285.
+   Current Bonus: +206425 HP. (if lvl is 41285 hp = 206425)
+*/
+
+
+/* Relic of Attack | +2 Attack per relic level for each party member
+   Current Level: 12,150.
+   Current Bonus: +24300 Attack.
+*/
+
+
+/* Relic of Mana | +3MP per relic level for each party member
+   Current Level: 3,695.
+   Current Bonus: +11085 MP.
+*/
+
+
+/* Relic of Gold Find | +1% Gold Find per relic level for the party
+   Current Level: 109,255.
+   Current Bonus: +109255% Gold Find.
+*/
+
+
+
+/* Relic of Physical Boost | +0.25% Boost to Physical Attacks per relic level for each party member.
+   Current Level: 6,395.
+   Current Bonus: +1599% Boost to Physical Attacks.
+*/
+
+
+
+/* Relic of Magic Boost | +0.2% Boost to Magic Attacks per relic level for each party member.
+   Current Level: 12,185.
+   Current Bonus: +2437% Boost to Magic Attacks.
+*/
+
+--------------------------------------------------------------------------------------
+
+/* Relic of Crit Damage | +0.5% Crit Damage per relic for each party member.
+   Current Level: 250. Max Level: 250.
+   Current Bonus: +125% Crit Damage.
+*/
+
+
+/* Relic of Crit Chance | +0.1% Crit Chance per relic level for each party member
+   Current Level: 100. Max Level: 100
+   Current Bonus: +100HP Regen
+*/
+
+
+/* Relic of Regeneration | +1HP Regen per relic level for each party member (MAX LVL: 100)
+  Current Level: 100. Max Level: 100.
+  Current Bonus: +100% HP Regen.
+*/

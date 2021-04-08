@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/style.css">
+  <title>Soda Dungeon 2 | Relics</title>
+</head>
+<body>
+
+  <header>
+    <div class="wrapper-flex-row">
+      <div class="soda-logo">
+        <h1>Soda Dungeon 2</h1>
+      </div>
+
+      <nav>
+        <a href="#" class="link">Relics</a>
+        <a href="#" class="link">Calculator</a>
+        <a href="#" class="link btn-delete-all">DELETE ALL</a>
+        </ul>
+      </nav>
+
+    </div>
+  </header>
+
+
+  <!-- ----------- MAIN SECTION ----------- -->
+  <main>
+    <div class="relic-calc">
+
+      <!-- ----------- RELIC TABS ----------- -->
+      <div class="relic-tabs">
+        <a href="#" class="heading">MAIN RELICS</a>
+        <a href="#" class="heading">SECONDARY RELICS</a>
+        <a href="#" class="heading">CLASS RELICS</a>
+      </div>
+
+
+      <!-- ----------- CONTAINER ----------- -->
+      <div class="wrapper-flex-row">
+
+        <!-- ----------- MAIN RELICS ----------- -->
+        <div id="main-relics" class="relics">
+
+          <div class="relic-card">
+            <h3 class="relic-name">Relic of Health</h3>
+            <img class="relic-img" src="./img/relics/Relic_of_Health.png" alt="Relic of Health">
+            <form class="relic-lvl-window">
+              <label for="healthRelic" class="relic-level">Level: </label>
+              <input id="healthRelic" class="level-input input-styling" placeholder="1" maxlength="8">
+              <a href="#" class="btn btn-delete hide-full">X</a>
+            </form>
+            <p class="relic-bonus relic-desc-health">+5 HP</p>
+          </div>
+
+
+          <div class="relic-card">
+            <h3 class="relic-name">Relic of Physical Boost</h3>
+            <img class="relic-img" src="./img/relics/Relic_of_Physical_Boost.png" alt="Relic of Physical Boost">
+            <div class="relic-lvl-window">
+              <label for="physBoostRelic" class="relic-level">Level: </label>
+              <input type="number" id="physBoostRelic" class="level-input input-styling" placeholder="1" maxlength="8">
+              <a href="#" class="btn btn-delete">X</a>
+            </div>
+            <p class="relic-bonus relic-desc-phys">+0.2% to Physical Attacks</p>
+          </div>
+
+
+          <div class="relic-card">
+            <h3 class="relic-name">Relic of Magic Boost</h3>
+            <img class="relic-img" src="./img/relics/Relic_of_Magic_BoostFixed.png" alt="Relic of Magic Boost">
+            <div class="relic-lvl-window">
+              <label for="magicBoostRelic" class="relic-level">Level: </label>
+              <input id="magicBoostRelic" class="level-input input-styling" placeholder="1" maxlength="8">
+              <a href="#" class="btn btn-delete">X</a>
+            </div>
+            <p class="relic-bonus relic-desc-magic">+0% to Magic Attacks</p>
+          </div>
+
+
+          <div class="relic-card">
+            <h3 class="relic-name">Relic of Gold Find</h3>
+            <img class="relic-img" src="./img/relics/Relic_of_Gold_Find.png" alt="Relic of Gold Find">
+            <div class="relic-lvl-window">
+              <label for="goldRelic" class="relic-level">Level: </label>
+              <input id="goldRelic" class="level-input input-styling" placeholder="1" maxlength="8">
+              <a href="#" class="btn btn-delete">X</a>
+            </div>
+            <p class="relic-bonus relic-desc-gold">+0% Gold Find</p>
+          </div>
+
+
+          <div class="relic-card">
+            <h3 class="relic-name">Relic of Attack</h3>
+            <img class="relic-img" src="./img/relics/Relic_of_Attack.png" alt="Relic of Attack">
+            <div class="relic-lvl-window">
+              <label for="attackRelic" class="relic-level">Level: </label>
+              <input id="attackRelic" class="level-input input-styling" placeholder="1" maxlength="8">
+              <a href="#" class="btn btn-delete">X</a>
+            </div>
+            <p class="relic-bonus relic-desc-attack">+0 Attack</p>
+          </div>
+
+
+          <div class="relic-card">
+            <h3 class="relic-name">Relic of Mana</h3>
+            <img class="relic-img" src="./img/relics/Relic_of_Mana.png" alt="Relic of Mana">
+            <div class="relic-lvl-window">
+              <label for="manaRelic" class="relic-level">Level: </label>
+              <input id="manaRelic" class="level-input input-styling" placeholder="1" maxlength="8">
+              <a href="#" class="btn btn-delete">X</a>
+            </div>
+            <p class="relic-bonus relic-desc-mana">+0% MP</p>
+          </div>
+
+
+          <div class="relic-card">
+            <h3 class="relic-name">Relic of Crit Chance</h3>
+            <img class="relic-img" src="./img/relics/Relic_of_Crit_Chance.png" alt="Relic of Crit Chance">
+            <div class="relic-lvl-window">
+              <label for="critChanceRelic" class="relic-level">Level: </label>
+              <input id="critChanceRelic" class="level-input input-styling restricted" placeholder="1" maxlength="3" min="1" max="250">
+              <a href="#" class="btn btn-delete">X</a>
+            </div>
+            <p class="relic-bonus relic-desc-crit-chance">+0% Crit Chance</p>
+          </div>
+
+
+          <div class="relic-card">
+            <h3 class="relic-name">Relic of Crit Damage</h3>
+            <img class="relic-img" src="./img/relics/Relic_of_Crit_Damage.png" alt="Relic of Crit Damage">
+            <div class="relic-lvl-window">
+              <label for="critDmgRelic" class="relic-level">Level: </label>
+              <input id="critDmgRelic" class="level-input input-styling restricted" placeholder="1" maxlength="3" min="1" max="250">
+              <a href="#" class="btn btn-delete">X</a>
+            </div>
+            <p class="relic-bonus relic-desc-crit-dmg">+0% Crit Damage</p>
+          </div>
+
+
+          <div class="relic-card">
+            <h3 class="relic-name">Relic of Essence Find</h3>
+            <img class="relic-img" src="./img/relics/Relic_of_Essence_Find.png" alt="Relic of Essence Find">
+            <div class="relic-lvl-window">
+              <label for="essenceRelic" class="relic-level">Level: </label>
+              <input id="essenceRelic" class="level-input input-styling restricted" placeholder="1" maxlength="3" min="1" max="100">
+              <a href="#" class="btn btn-delete">X</a>
+            </div>
+            <p class="relic-bonus relic-desc-essence">+0% Essence Find</p>
+          </div>
+
+
+          <div class="relic-card">
+            <h3 class="relic-name">Relic of Regeneration</h3>
+            <img class="relic-img" src="./img/relics/Relic_of_Regeneration.png" alt="Relic of Regeneration">
+            <div class="relic-lvl-window">
+              <label for="regenRelic" class="relic-level">Level: </label>
+              <input id="regenRelic" class="level-input input-styling restricted" placeholder="1" maxlength="3" min="1" max="100">
+              <a href="#" class="btn btn-delete">X</a>
+            </div>
+            <p class="relic-bonus relic-desc-regen">+0 HP Regen</p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </main>
+<script src="/app.js"></script>
+</body>
+</html>
+
+
+
+
+
+<!-- OLD CODE -->
+
+<!-- <div class="relic-card">
+  <div class="left-side">
+    <img src="./img/relics/health_relic.png" alt="Health Relic">
+  </div>
+  <div class="right-side">
+    <h3 class="relic-name">Relic of Health</h3>
+    <p class="relic-description">+5HP per relic level for each party member.</p>
+    <div class="relic-lvl-window">
+      <p class="relic-current-lvl">Current Level: </p>
+        <input id="healthRelic" class="level-input input-styling" name="level-input" placeholder="0" required>
+        <a href="#" class="btn btn-delete">X</a>
+    </div>
+    <p class="relic-bonus-desc relic-desc-health">Current Bonus: +0 HP.</p>
+  </div>
+</div> -->
+
+
+<!-- <div class="relic-card hide">
+  <div class="left-side">
+    <img src="./img/relics/health_relic.png" alt="Health Relic">
+  </div>
+  <div class="right-side">
+    <h3 class="relic-name">Relic of Physical Boost</h3>
+    <p class="relic-description">+0.25% Boost to Physical Attacks per relic level for each party member.</p>
+    <div class="relic-lvl-window">
+      <p class="relic-current-lvl">Current Level: </p>
+        <input id="physBoostRelic" class="level-input input-styling" name="level-input" placeholder="0" required>
+        <a href="#" class="btn btn-delete">X</a>
+    </div>
+    <p class="relic-bonus-desc relic-health">Current Bonus: +0% Boost to Physical Attacks.</p>
+  </div>
+</div> -->
+
+
+<!-- <div class="relic-card hide">
+  <div class="left-side">
+    <img src="./img/relics/health_relic.png" alt="Health Relic">
+  </div>
+  <div class="right-side">
+    <h3 class="relic-name">Relic of Magic Boost</h3>
+    <p class="relic-description">+0.2% Boost to Magic Attacks per relic level for each party member.</p>
+    <div class="relic-lvl-window">
+      <p class="relic-current-lvl">Current Level: </p>
+        <input id="magicBoostRelic" class="level-input input-styling" name="level-input" placeholder="0" required>
+        <a href="#" class="btn btn-delete">X</a>
+    </div>
+    <p class="relic-bonus-desc relic-health">Current Bonus: +0% Boost to Magic Attacks.</p>
+  </div>
+</div> -->
