@@ -34,7 +34,12 @@ textarea:focus, input:focus {
   outline: none;
 }
 
-
+// Turn Off Number Input Spinners
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
 
 
 /* ------------------------ UTILITY CLASSES ------------------------ */
@@ -146,7 +151,7 @@ nav {
   background: $bg-relic-card;
   // background: url('/img/relic-bg.png');
   border-radius: 5px;
-  padding: 1rem;
+  padding: 1rem .75rem;
   margin: 1.5rem;
   width: 200px;
   min-height: 310px;
@@ -169,15 +174,18 @@ nav {
   .relic-lvl-window {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     align-items: center;
     // text-align: center;
     // justify-content: space-between;
     padding: 0.5rem 0;
     margin-top: 1rem;
+
   }
 
+
   .relic-bonus {
-    display: block;
+    // display: block;
     text-align: center;
     overflow-wrap: break-word;
     width: 95%;
