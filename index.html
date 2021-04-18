@@ -6,19 +6,38 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
   <link rel="stylesheet" href="/style.css">
-  <title>Soda Dungeon 2 | Relics</title>
+  <title>Soda Dungeon 2 | Relic Showcase</title>
 </head>
 <body>
 
   <nav>
     <ul class="menu">
-      <li class="menu__logo"><a href="#">Soda Dungeon 2</a></li>
-      <li class="menu__item"><a href="#" id="hideRelicNames">Hide Relic Names</a></li>
-      <!-- <li class="menu__item"><a href="#" id="saveData">Save</a></li> -->
-      <li class="menu__item"><a href="#" class="btn-delete-all">Delete All</a></li>
+      <li class="menu__logo"><a href="#">Soda Dungeon 2 | Relic Showcase</a></li>
+      <li class="menu--dropdown">
+        <a href="#" class="menu--dropdown__toggle">
+          Options
+        </a>
+        <a href="#" class="menu--dropdown__toggle__mobile">
+
+        </a>
+
+        <div class="dropdown">
+          <ul>
+            <li><a href="#" class="dropdown__item" id="hideRelicNames">Hide/Show Relic Names </a></li>
+            <li><a href="#" class="dropdown__item" id="showStats">Hide/Show Stats</a></li>
+            <li><a href="#" class="dropdown__item" id="revealSpoiler">Reveal Spoiler Relic</a></li>
+            <li><a href="#" class="dropdown__item" id="hideCappedRelics">Hide Main Capped Relics</a></li>
+            <li><a href="#" class="dropdown__item btn-delete-all">Reset All Relic Levels</a></li>
+          </ul>
+        </div>
+
+      </li>
       <li class="menu--toggle"><a href="#"><i class="fas fa-bars"></i></a></li>
     </ul>
   </nav>
+
+  <!-- <i class="fas fa-cog"></i> -->
+  <!-- <i class="fas fa-caret-down"></i> -->
 
   <!-- ----------- MAIN SECTION ----------- -->
   <main>
@@ -44,7 +63,7 @@
             <div class="relics--card--stat relic-form">
               <label for="healthRelic" class="relics--card--stat__level">Level: </label>
               <input type="number" id="healthRelic" class="relics--card--stat__level-input input-styling" placeholder="1" onKeyPress="if(this.value.length==8) return false;">
-              <a href="#" class="btn btn-delete">X</a>
+              <button class="btn btn-delete">X</button>
               <p class="relics--card--stat__result">+5 HP</p>
             </div>
           </div>
@@ -55,8 +74,8 @@
             <img class="relics--card__img" src="./img/relics/Relic_of_Physical_Boost.png" alt="Relic of Physical Boost">
             <div class="relics--card--stat">
               <label for="physBoostRelic" class="relics--card--stat__level">Level: </label>
-              <input type="number" id="physBoostRelic" class="relics--card--stat__level-input input-styling" placeholder="1" onKeyPress="if(this.value.length==8) return false;" onkeydown="this.style.width = ((this.value.length + 1) * 12) + 'px';">
-              <a href="#" class="btn btn-delete">X</a>
+              <input type="number" id="physBoostRelic" class="relics--card--stat__level-input input-styling" placeholder="1" onKeyPress="if(this.value.length==8) return false;">
+              <button class="btn btn-delete">X</button>
               <p class="relics--card--stat__result"></p>
             </div>
           </div>
@@ -68,7 +87,7 @@
             <div class="relics--card--stat">
               <label for="magicBoostRelic" class="relics--card--stat__level">Level: </label>
               <input type="number" id="magicBoostRelic" class="relics--card--stat__level-input input-styling" placeholder="1" onKeyPress="if(this.value.length==8) return false;">
-              <a href="#" class="btn btn-delete">X</a>
+              <button class="btn btn-delete">X</button>
               <p class="relics--card--stat__result">+0% to Magic Attacks</p>
             </div>
           </div>
@@ -80,7 +99,7 @@
             <div class="relics--card--stat">
               <label for="goldRelic" class="relics--card--stat__level">Level: </label>
               <input type="number" id="goldRelic" class="relics--card--stat__level-input input-styling" placeholder="1" onKeyPress="if(this.value.length==8) return false;">
-              <a href="#" class="btn btn-delete">X</a>
+              <button class="btn btn-delete">X</button>
               <p class="relics--card--stat__result">+0% Gold Find</p>
             </div>
           </div>
@@ -92,7 +111,7 @@
             <div class="relics--card--stat">
               <label for="attackRelic" class="relics--card--stat__level">Level: </label>
               <input type="number" id="attackRelic" class="relics--card--stat__level-input input-styling" placeholder="1" onKeyPress="if(this.value.length==8) return false;">
-              <a href="#" class="btn btn-delete">X</a>
+              <button class="btn btn-delete">X</button>
               <p class="relics--card--stat__result">+0 Attack</p>
             </div>
           </div>
@@ -104,55 +123,55 @@
             <div class="relics--card--stat">
               <label for="manaRelic" class="relics--card--stat__level">Level: </label>
               <input type="number" id="manaRelic" class="relics--card--stat__level-input input-styling" placeholder="1" onKeyPress="if(this.value.length==8) return false;">
-              <a href="#" class="btn btn-delete">X</a>
+              <button class="btn btn-delete">X</button>
               <p class="relics--card--stat__result">+0% MP</p>
             </div>
           </div>
 
 
-          <div class="relics--card">
+          <div class="relics--card capped">
             <h3 class="relics--card__name">Relic of Crit Chance</h3>
             <img class="relics--card__img" src="./img/relics/Relic_of_Crit_Chance.png" alt="Relic of Crit Chance">
             <div class="relics--card--stat">
               <label for="critChanceRelic" class="relics--card--stat__level">Level: </label>
               <input type="number" id="critChanceRelic" class="relics--card--stat__level-input input-styling restricted" placeholder="1" onKeyPress="if(this.value.length==3) return false;">
-              <a href="#" class="btn btn-delete">X</a>
+              <button class="btn btn-delete">X</button>
               <p class="relics--card--stat__result">+0% Crit Chance</p>
             </div>
           </div>
 
 
-          <div class="relics--card">
+          <div class="relics--card capped">
             <h3 class="relics--card__name">Relic of Crit Damage</h3>
             <img class="relics--card__img" src="./img/relics/Relic_of_Crit_Damage.png" alt="Relic of Crit Damage">
             <div class="relics--card--stat">
               <label for="critDmgRelic" class="relics--card--stat__level">Level: </label>
               <input type="number" id="critDmgRelic" class="relics--card--stat__level-input input-styling restricted" placeholder="1" onKeyPress="if(this.value.length==3) return false;">
-              <a href="#" class="btn btn-delete">X</a>
+              <button class="btn btn-delete">X</button>
               <p class="relics--card--stat__result">+0% Crit Damage</p>
             </div>
           </div>
 
 
-          <div class="relics--card">
+          <div class="relics--card capped">
             <h3 class="relics--card__name">Relic of Essence Find</h3>
             <img class="relics--card__img" src="./img/relics/Relic_of_Essence_Find.png" alt="Relic of Essence Find">
             <div class="relics--card--stat">
               <label for="essenceRelic" class="relics--card--stat__level">Level: </label>
               <input type="number" id="essenceRelic" class="relics--card--stat__level-input input-styling restricted" placeholder="1" onKeyPress="if(this.value.length==3) return false;">
-              <a href="#" class="btn btn-delete">X</a>
+              <button class="btn btn-delete">X</button>
               <p class="relics--card--stat__result">+0% Essence Find</p>
             </div>
           </div>
 
 
-          <div class="relics--card">
+          <div class="relics--card capped">
             <h3 class="relics--card__name">Relic of Regeneration</h3>
             <img class="relics--card__img" src="./img/relics/Relic_of_Regeneration.png" alt="Relic of Regeneration">
             <div class="relics--card--stat">
               <label for="regenRelic" class="relics--card--stat__level">Level: </label>
               <input type="number" id="regenRelic" class="relics--card--stat__level-input input-styling restricted" placeholder="1" onKeyPress="if(this.value.length==3) return false;">
-              <a href="#" class="btn btn-delete">X</a>
+              <button class="btn btn-delete">X</button>
               <p class="relics--card--stat__result">+0 HP Regen</p>
             </div>
           </div>
@@ -168,7 +187,7 @@
             <div class="relics--card--stat">
               <label for="dungeonKeysRelic" class="relics--card--stat__level">Level: </label>
               <input type="number" id="dungeonKeysRelic" class="relics--card--stat__level-input input-styling restricted" placeholder="1" onKeyPress="if(this.value.length==3) return false;">
-              <a href="#" class="btn btn-delete">X</a>
+              <button class="btn btn-delete">X</button>
               <p class="relics--card--stat__result">+0% Chance of Finding Dungeon Keys</p>
             </div>
           </div>
@@ -179,7 +198,7 @@
             <div class="relics--card--stat">
               <label for="masteryRelic" class="relics--card--stat__level">Level: </label>
               <input type="number" id="masteryRelic" class="relics--card--stat__level-input input-styling restricted" placeholder="1" onKeyPress="if(this.value.length==3) return false;">
-              <a href="#" class="btn btn-delete">X</a>
+              <button class="btn btn-delete">X</button>
               <p class="relics--card--stat__result">+0.1% Boost to Character Mastery XP</p>
             </div>
           </div>
@@ -190,7 +209,7 @@
             <div class="relics--card--stat">
               <label for="oreRelic" class="relics--card--stat__level">Level: </label>
               <input type="number" id="oreRelic" class="relics--card--stat__level-input input-styling restricted" placeholder="1" onKeyPress="if(this.value.length==3) return false;">
-              <a href="#" class="btn btn-delete">X</a>
+              <button class="btn btn-delete">X</button>
               <p class="relics--card--stat__result">+0.1 Ore Find</p>
             </div>
           </div>
@@ -201,7 +220,7 @@
             <div class="relics--card--stat">
               <label for="resistRelic" class="relics--card--stat__level">Level: </label>
               <input type="number" id="resistRelic" class="relics--card--stat__level-input input-styling restricted" placeholder="1" onKeyPress="if(this.value.length==2) return false;">
-              <a href="#" class="btn btn-delete">X</a>
+              <button class="btn btn-delete">X</button>
               <p class="relics--card--stat__result">+0.25% Status Resist</p>
             </div>
           </div>
@@ -212,7 +231,7 @@
             <div class="relics--card--stat">
               <label for="reflectionRelic" class="relics--card--stat__level">Level: </label>
               <input type="number" id="reflectionRelic" class="relics--card--stat__level-input input-styling restricted" placeholder="1" onKeyPress="if(this.value.length==3) return false;">
-              <a href="#" class="btn btn-delete">X</a>
+              <button class="btn btn-delete">X</button>
               <p class="relics--card--stat__result">+0.2% Damage Reflection</p>
             </div>
           </div>
@@ -228,7 +247,7 @@
             <div class="relics--card--stat">
               <label for="junkieRelic" class="relics--card--stat__level">Level: </label>
               <input type="number" id="junkieRelic" class="relics--card--stat__level-input input-styling restricted" placeholder="1" onKeyPress="if(this.value.length==8) return false;">
-              <a href="#" class="btn btn-delete">X</a>
+              <button class="btn btn-delete">X</button>
               <p class="relics--card--stat__result">+2 ATK/HP/MP</p>
             </div>
           </div>
@@ -239,7 +258,7 @@
             <div class="relics--card--stat">
               <label for="carpenterRelic" class="relics--card--stat__level">Level: </label>
               <input type="number" id="carpenterRelic" class="relics--card--stat__level-input input-styling restricted" placeholder="1" onKeyPress="if(this.value.length==8) return false;">
-              <a href="#" class="btn btn-delete">X</a>
+              <button class="btn btn-delete">X</button>
               <p class="relics--card--stat__result">+2 ATK/HP/MP</p>
             </div>
           </div>
@@ -250,7 +269,7 @@
             <div class="relics--card--stat">
               <label for="minerRelic" class="relics--card--stat__level">Level: </label>
               <input type="number" id="minerRelic" class="relics--card--stat__level-input input-styling restricted" placeholder="1" onKeyPress="if(this.value.length==8) return false;">
-              <a href="#" class="btn btn-delete">X</a>
+              <button class="btn btn-delete">X</button>
               <p class="relics--card--stat__result">+2 ATK/HP/MP</p>
             </div>
           </div>
@@ -261,7 +280,7 @@
             <div class="relics--card--stat">
               <label for="nurseRelic" class="relics--card--stat__level">Level: </label>
               <input type="number" id="nurseRelic" class="relics--card--stat__level-input input-styling restricted" placeholder="1" onKeyPress="if(this.value.length==8) return false;">
-              <a href="#" class="btn btn-delete">X</a>
+              <button class="btn btn-delete">X</button>
               <p class="relics--card--stat__result">+2 ATK/HP/MP</p>
             </div>
           </div>
@@ -272,7 +291,7 @@
             <div class="relics--card--stat">
               <label for="mysticRelic" class="relics--card--stat__level">Level: </label>
               <input type="number" id="mysticRelic" class="relics--card--stat__level-input input-styling restricted" placeholder="1" onKeyPress="if(this.value.length==8) return false;">
-              <a href="#" class="btn btn-delete">X</a>
+              <button class="btn btn-delete">X</button>
               <p class="relics--card--stat__result">+2 ATK/HP/MP</p>
             </div>
           </div>
@@ -284,7 +303,7 @@
             <div class="relics--card--stat">
               <label for="thiefRelic" class="relics--card--stat__level">Level: </label>
               <input type="number" id="thiefRelic" class="relics--card--stat__level-input input-styling restricted" placeholder="1" onKeyPress="if(this.value.length==8) return false;">
-              <a href="#" class="btn btn-delete">X</a>
+              <button class="btn btn-delete">X</button>
               <p class="relics--card--stat__result">+2 ATK/HP/MP</p>
             </div>
           </div>
@@ -295,7 +314,7 @@
             <div class="relics--card--stat">
               <label for="huntressRelic" class="relics--card--stat__level">Level: </label>
               <input type="number" id="huntressRelic" class="relics--card--stat__level-input input-styling restricted" placeholder="1" onKeyPress="if(this.value.length==8) return false;">
-              <a href="#" class="btn btn-delete">X</a>
+              <button class="btn btn-delete">X</button>
               <p class="relics--card--stat__result">+2 ATK/HP/MP</p>
             </div>
           </div>
@@ -306,7 +325,7 @@
             <div class="relics--card--stat">
               <label for="darkmageRelic" class="relics--card--stat__level">Level: </label>
               <input type="number" id="darkmageRelic" class="relics--card--stat__level-input input-styling restricted" placeholder="1" onKeyPress="if(this.value.length==8) return false;">
-              <a href="#" class="btn btn-delete">X</a>
+              <button class="btn btn-delete">X</button>
               <p class="relics--card--stat__result">+2 ATK/HP/MP</p>
             </div>
           </div>
@@ -317,18 +336,18 @@
             <div class="relics--card--stat">
               <label for="blademasterRelic" class="relics--card--stat__level">Level: </label>
               <input type="number" id="blademasterRelic" class="relics--card--stat__level-input input-styling restricted" placeholder="1" onKeyPress="if(this.value.length==8) return false;">
-              <a href="#" class="btn btn-delete">X</a>
+              <button class="btn btn-delete">X</button>
               <p class="relics--card--stat__result">+2 ATK/HP/MP</p>
             </div>
           </div>
 
-          <div class="relics--card">
-            <h3 class="relics--card__name">Relic of The Dark Lord</h3>
-            <img class="relics--card__img" src="./img/class_relics/Relic_of_The_Dark_Lord.png" alt="Relic of The Dark Lord">
+          <div class="relics--card" id="spoilerChar">
+            <h3 class="relics--card__name">Relic of The Hidden Character</h3>
+            <img class="relics--card__img spoiler" src="./img/class_relics/Relic_of_The_Dark_Lord.png" alt="Relic of The Dark Lord">
             <div class="relics--card--stat">
               <label for="darkLordRelic" class="relics--card--stat__level">Level: </label>
               <input type="number" id="darkLordRelic" class="relics--card--stat__level-input input-styling restricted" placeholder="1" onKeyPress="if(this.value.length==8) return false;">
-              <a href="#" class="btn btn-delete">X</a>
+              <button class="btn btn-delete">X</button>
               <p class="relics--card--stat__result">+2 ATK/HP/MP</p>
             </div>
           </div>
@@ -339,7 +358,7 @@
             <div class="relics--card--stat">
               <label for="chefRelic" class="relics--card--stat__level">Level: </label>
               <input type="number" id="chefRelic" class="relics--card--stat__level-input input-styling restricted" placeholder="1" onKeyPress="if(this.value.length==8) return false;">
-              <a href="#" class="btn btn-delete">X</a>
+              <button class="btn btn-delete">X</button>
               <p class="relics--card--stat__result">+2 ATK/HP</p>
             </div>
           </div>
@@ -350,28 +369,17 @@
             <div class="relics--card--stat">
               <label for="wizardRelic" class="relics--card--stat__level">Level: </label>
               <input type="number" id="wizardRelic" class="relics--card--stat__level-input input-styling restricted" placeholder="1" onKeyPress="if(this.value.length==8) return false;">
-              <a href="#" class="btn btn-delete">X</a>
+              <button class="btn btn-delete">X</button>
               <p class="relics--card--stat__result">+2 ATK/HP/MP</p>
             </div>
           </div>
 
-
         </section>
 
-
-
       </div>
-
-      <!-- <a href="#" class="main--tabs__heading" onclick="openPage('main--main-relics', this)">MAIN</a>
-        <a href="#" class="main--tabs__heading" onclick="openPage('main--secondary-relics', this)">SECONDARY</a>
-        <a href="#" class="main--tabs__heading" onclick="openPage('main--class-relics', this)">CLASS</a> -->
-
 
       <!-- ----------- CONTAINER ----------- -->
-      <div class="wrapper-flex-row">
 
-
-      </div>
     </div>
   </main>
 <script src="/app.js"></script>
