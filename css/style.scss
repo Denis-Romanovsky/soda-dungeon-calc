@@ -64,10 +64,6 @@ input[type=number] {
   }
 }
 
-.gg {
-  color: red;
-}
-
 .add-level::before { content: '+'; }
 
 .hidden { display: none !important; }
@@ -112,8 +108,9 @@ input[type=number] {
       min-width: 250px;
       display: none;
 
+
       .dropdown__item:hover {
-        color: $element-hovered
+        color: $element-hovered;
       }
     }
 
@@ -335,22 +332,6 @@ nav { padding: 0; }
         text-align: center;
         width: 100vw;
         display: none;
-
-        // @for $num from 1 through 5 {
-        //   .dropdown__item-#{$num} {
-        //     animation: rotateX 300ms ($num * 60ms) ease-in-out forwards;
-        //     transform-origin: top center;
-        //   }
-        // }
-
-
-
-        // li {
-        //   // display: none;
-        //   background-color: #34495e;
-        //   padding: 10px 20px;
-        //   opacity: 0
-        // }
       }
 
       &.active .dropdown {

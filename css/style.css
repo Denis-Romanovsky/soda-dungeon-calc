@@ -61,10 +61,6 @@ input[type=number] {
   background: #2c81f0;
 }
 
-.gg {
-  color: red;
-}
-
 .add-level::before {
   content: "+";
 }
