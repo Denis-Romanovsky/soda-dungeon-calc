@@ -1,21 +1,8 @@
 const levelInput = document.querySelectorAll('.relics--card--stat__level-input');
-const resetBtn = document.querySelectorAll('.btn-delete');
-const resetAll = document.querySelector('.btn-delete-all');
+const resetRelicButton = document.querySelectorAll('.btn-delete');
+const resetAllRelicLevels = document.querySelector('.btn-delete-all');
 const relicCard = document.querySelectorAll('.relics--card');
 
-// Toggle Option Classes
-const relicName = document.querySelectorAll('.relics--card__name');
-const hideRelicNames = document.querySelector('#hideRelicNames');
-
-const showStats = document.querySelector('#showStats');
-const relicStatResult = document.querySelectorAll('.relics--card--stat__result');
-
-
-// used for limiting relic level to a certain value
-const relicLevelCapped = document.querySelectorAll('.restricted');
-
-const menu = document.querySelector('.menu');
-const menuToggleButton = document.querySelector('.menu--toggle');
 
 // ------------------------ RELIC TEMPLATE ------------------------ \\
 class Relic {
@@ -28,7 +15,14 @@ class Relic {
   }
   value() {
     // let result = Math.round((this.level * this.multiplier) * 100) / 100;
-    return Math.floor(this.level * this.multiplier);
+    // let Math.floor(this.level * this.multiplier);
+    let result;
+    if (this.level < 100) {
+      result = Math.round((this.level * this.multiplier) * 100) / 100;
+    } else {
+      result = Math.floor(this.level * this.multiplier);
+    }
+    return result;
   }
 };
 
@@ -77,7 +71,7 @@ const wizardRelic = new Relic('wizardRelic', 1, 1, 2,' ATK/HP/MP');
 const blacksmithRelic = new Relic('blacksmithRelic', 1, 1, 2,' ATK/HP/MP');
 
 // Array of relics
-const mainRelics = [
+const allRelics = [
   healthRelic,
   physBoostRelic,
   magicBoostRelic,
@@ -123,7 +117,7 @@ let relicValues = [];
 const setLocalStorage = () => {
 
   // push values to arrays that store keys/values
-  for (let eachRelic of mainRelics) {
+  for (let eachRelic of allRelics) {
     relicKeys.push(eachRelic.name);
     relicValues.push(eachRelic.level);
   }
@@ -151,9 +145,6 @@ const relicStored = JSON.parse(localStorage.getItem('relics'))
 localStorage.getItem('relics', JSON.stringify(relicStored));
 
 
-let spoilerRelicStored = JSON.parse(localStorage.getItem('spoilerActive'));
-localStorage.getItem(spoilerRelicStored);
-
 
 
 // ---------------------- Website UI Related Stuff ----------------------
@@ -166,6 +157,8 @@ const toggleMenu = () => {
   }
 }
 
+const menu = document.querySelector('.menu');
+const menuToggleButton = document.querySelector('.menu--toggle');
 menuToggleButton.addEventListener('click', toggleMenu);
 
 
@@ -193,28 +186,31 @@ const removeActiveTab = () => {
 
 const addActiveTab = tab => {
   tab.classList.add('is-active');
-  const href = tab.querySelector('a').getAttribute('href');
-  const matchingSection = document.querySelector(href);
-  matchingSection.classList.add('is-active');
+  const href = tab.querySelector('a').getAttribute('href'); // get href link of a tab (#main-class--relics)
+  const matchingSection = document.querySelector(href); // redirects to the section id (#main--class--relics)
+  matchingSection.classList.add('is-active'); // <section id="main--class--relics class="tab-content [is-active]">
 }
 
-// --------------- Side Menu ---------------
-const sideMenu = document.querySelector('.menu--dropdown');
+// --------------- Dropdown Menu ---------------
+const dropdownMenu = document.querySelector('.menu--dropdown');
 
-sideMenu.addEventListener('click', (e) => {
-  if (e.target.classList.contains('menu--dropdown__toggle') || e.target.classList.contains('menu--dropdown__toggle__mobile')) { sideMenu.classList.toggle('active') }
-})
-
-// Close the side menu on click outside
-const closeSideMenu = (e) => {
-  let isClickInside = sideMenu.contains(e.target);
-  if (!isClickInside && sideMenu.classList.contains('active')) {
-    sideMenu.classList.remove('active');
+const openDropdownMenu = (e) => {
+  if (e.target.classList.contains('menu--dropdown__toggle')
+  || e.target.classList.contains('menu--dropdown__toggle__mobile')) {
+    dropdownMenu.classList.toggle('active')
   }
 }
 
-// execute the function
-document.addEventListener('click', closeSideMenu);
+// Close the dropdown on click outside
+const closeDropdownMenu = (e) => {
+  let isClickInside = dropdownMenu.contains(e.target);
+  if (!isClickInside && dropdownMenu.classList.contains('active')) {
+    dropdownMenu.classList.remove('active');
+  }
+}
+
+dropdownMenu.addEventListener('click', openDropdownMenu);
+document.addEventListener('click', closeDropdownMenu);
 
 
 
@@ -222,42 +218,41 @@ document.addEventListener('click', closeSideMenu);
 // ---------------------- INPUTS/RELIC CARD ----------------------
 
 // INPUT FIELD CALCULATION. RECEIVE A VALUE IN ORDER TO CALCULATE IT FOR RELIC BONUS DESCRIPTION
-levelInput.forEach(item => {
+levelInput.forEach(input => {
 
-  // relic-bonus of each relic class
-  let relicDescription = item.nextElementSibling.nextElementSibling;
+  // relic-stat-result of each relic class
+  let relicStatResult = input.nextElementSibling.nextElementSibling;
 
-  for (let relic of mainRelics) {
+  for (let relic of allRelics) {
 
     // LOCAL STORAGE
-    if (relicStored.hasOwnProperty(relic.name) && item.id === relic.name) {
+    if (relicStored.hasOwnProperty(relic.name) && input.id === relic.name) {
       relic.level = relicStored[relic.name];
-      item.value = relic.level
-      relicDescription.innerText = `+${relic.value()}${relic.shortDescription}`;
+      input.value = relic.level
+      relicStatResult.innerText = `+${relic.value()}${relic.shortDescription}`;
     }
 
     // set to empty because there number 1 in the input field, meaning if I type a number it will always be 142 i.e 1(the first index) won't be removed
-    if (item.value.length == 0 || relic.level == 1) {
-      if (item.id == relic.name) {
-        item.value = '';
+    if (input.value.length == 0 || relic.level == 1) {
+      if (input.id == relic.name) {
+        input.value = '';
         // if input is empty set description to its relic multiplier and relic description, basically set it to minLevel
-        relicDescription.innerText = `+${relic.multiplier}${relic.shortDescription}`;
+        relicStatResult.innerText = `+${relic.multiplier}${relic.shortDescription}`;
       };
     };
 
     // update descriptions in real time based on input
-    item.addEventListener('input', updateValue => {
-      // get access to each relic-bonus to edit them individually if item.id is equal to relic.name
+    input.addEventListener('input', updateValue => {
+      // get access to each relic-bonus to edit them individually if input.id is equal to relic.name
       // insert values into specific relic description if true
-      if (item.id == relic.name) {
+      if (input.id == relic.name) {
         relic.level = parseInt(updateValue.target.value);
 
         // if empty make it lvl 1, to avoid NaN
         if (updateValue.target.value.length === 0) { relic.level = 1; };
 
         // set relic description
-        relicDescription.innerText = `+${relic.value()}${relic.shortDescription}`;
-        console.log(relic.value());
+        relicStatResult.innerText = `+${relic.value()}${relic.shortDescription}`;
       };
       setLocalStorage(); // Update localStorage in real time
     });
@@ -266,17 +261,18 @@ levelInput.forEach(item => {
 
 
 // Reset level button
-resetBtn.forEach(btn => {
-  btn.addEventListener('click', e => {
-    let relicDescription = btn.nextElementSibling; // find relic-bonus
+resetRelicButton.forEach(button => {
+  button.addEventListener('click', e => {
+    let inputField = e.target.previousElementSibling;
+    let relicStatResult = button.nextElementSibling; // relic-stat-result
 
-    for (let relic of mainRelics) {
-      if (e.target.previousElementSibling.id == relic.name) {
+    for (let relic of allRelics) {
+      if (inputField.id == relic.name) {
         relic.level = 1; // to avoid NaN and other bugs
 
-        e.target.previousElementSibling.value = ''; // empty the input field
+        inputField.value = '';
         // also set the bonus value to its multiplier as base(by default when lvl 1)
-        relicDescription.innerText = `+${relic.multiplier}${relic.shortDescription}`;
+        relicStatResult.innerText = `+${relic.multiplier}${relic.shortDescription}`;
         setLocalStorage(); // RESET LOCAL STORAGE;
       }
     }
@@ -285,145 +281,169 @@ resetBtn.forEach(btn => {
 
 
 // CHANGING INPUT VALUE IF IT BECOMES MORE THAN relicClass.maxLevel
-relicLevelCapped.forEach(elemCapped => {
+const cappedRelicInputField = document.querySelectorAll('.restricted');
+const cappedLevelColor = 'rgb(221, 224, 22)';
+
+cappedRelicInputField.forEach(input => {
   // Get the description of each relic
-  let relicDescription = elemCapped.nextElementSibling.nextElementSibling;
+  let relicStatResult = input.nextElementSibling.nextElementSibling;
 
-  for (let relic of mainRelics) {
-    elemCapped.addEventListener('input', () => {
-      if (elemCapped.id == relic.name) {
-        if (elemCapped.value > relic.maxLevel) {
-          elemCapped.value = relic.maxLevel;
-          relicDescription.innerText = `+${relic.maxLevel * relic.multiplier}${relic.shortDescription}`;
-
+  for (let relic of allRelics) {
+    input.addEventListener('input', () => {
+      if (input.id == relic.name) {
+        if (input.value >= relic.maxLevel) {
           // update the relic.level value
           relic.level = relic.maxLevel;
+          input.value = relic.maxLevel;
+
+          input.style.color = cappedLevelColor;  // change color when reached the max level
+
+          relicStatResult.innerText = `+${relic.maxLevel * relic.multiplier}${relic.shortDescription}`;
           setLocalStorage(); // Update localStorage to prevent lvl going past the limit (100+/250+)
+        }
+        // Make color change dynamic, if max lvl - yellow, if not - white
+        if (input.value < relic.maxLevel) {
+          input.style.color = 'white';
+        } else {
+          input.style.color = cappedLevelColor;
         }
       }
     })
+    // when the page is reloaded the color is still applied
+    if (input.id == relic.name && input.value >= relic.maxLevel) {
+      input.style.color = cappedLevelColor;
+    }
   }
 });
-
 
 
 
 // -------------------- OPTIONS SECTION
 
+// Toggle Options
+const optionToggleRelicNames = document.getElementById('toggleRelicNames');
+const optionToggleRelicStats = document.getElementById('toggleStats');
+const optionToggleCappedRelics = document.getElementById('toggleCappedRelics');
+const optionToggleSpoilerRelic = document.getElementById('toggleSpoiler');
+
+// Toggle Options Corresponding Classes
+const relicCardName = document.querySelectorAll('.relics--card__name');
+const relicCardStatResult = document.querySelectorAll('.relics--card--stat__result');
+const cappedRelicCard = document.querySelectorAll('.capped');
+const spoilerRelic = document.querySelector('#spoilerChar');
+
+
 // Utility functions:
-// Checks if an element has .hide-full. Returns true or false that will be stored in local storage as a value
-const hasHideClass = (localVariable) => {
+// Checks if an element has .hidden. Returns true or false that will be stored in local storage as a value
+const hasHideClass = (element) => {
   let containsHide;
-  return localVariable.classList.contains('hide-full') ? containsHide = true : containsHide = false;
+  return element.classList.contains('hidden') ? containsHide = true : containsHide = false;
 }
 
-// Getting the value from local storage and apply it to the application
-const lsSetOption = (option, parsedStoredValue) => {
-  option.forEach(elem => {
-    if (parsedStoredValue) { elem.classList.add('hide-full') };
-    if (!parsedStoredValue) { elem.classList.remove('hide-full') };
-  })
-};
+// Switches [Hide/Show] Relic Names, Stats, Hidden Relic etc.
+const replaceOptionName = (optionId) => {
+  let setHide = optionId.innerText.replace('Show', 'Hide');
+  let setShow = optionId.innerText.replace('Hide', 'Show');
+  return optionId.innerText.match(/Show/) ? optionId.innerText = setHide : optionId.innerText = setShow;
+}
 
 // Template for each Show/Hide Setting that also stores local storage values
-const toggleShowHideSetting = (setting, settingElement, localStorageKey) => {
-  setting.addEventListener('click', () => { // setting = #ID of a setting
-    settingElement.forEach(elem => { // element that the setting affects (i.e relicName)
-      elem.classList.toggle('hide-full'); // loop through them and toggle each of them
-      localStorage.setItem(localStorageKey, hasHideClass(elem));
+const stateOfToggleOption = (optionId, optionElementClass, setLocalStorageKeyState) => {
+  optionId.addEventListener('click', () => {
+    replaceOptionName(optionId);
+    optionElementClass.forEach(element => { // relicCardName/relicCardStatResult
+      element.classList.toggle('hidden'); // loop through them and toggle each of them
+      localStorage.setItem(setLocalStorageKeyState, hasHideClass(element));
     })
   })
 };
 
 
-// Hide Capped Relics
-const hideCappedRelics = document.querySelector('#hideCappedRelics');
-const cappedRelics = document.querySelectorAll('.capped');
+// Retrieve the state of each toggle option from localstorage and apply it
+const retrieveOptionNameStateFromLocalStorage = (toggleOptionName, localStorageKey, exception) => {
+  let setHide = toggleOptionName.innerText.replace('Show', 'Hide');
+  let setShow = toggleOptionName.innerText.replace('Hide', 'Show');
+  const result = {[localStorageKey]: localStorage.getItem(localStorageKey)};
+  if (result[localStorageKey] == 'false') { toggleOptionName.innerText = setHide }
+  if (result[localStorageKey] == 'true') { toggleOptionName.innerText = setShow; }
+  if (exception) {
+    if (result[localStorageKey] == 'false') { toggleOptionName.innerText = setShow }
+    if (result[localStorageKey] == 'true') { toggleOptionName.innerText = setHide; }
+  }
+}
+
+// Getting the value from local storage and apply it
+const applyOptionStateFromLocalStorage = (option, isHidden) => {
+  option.forEach(elem => {
+    if (isHidden) { elem.classList.add('hidden') };
+    if (!isHidden) { elem.classList.remove('hidden') };
+  })
+};
 
 
-toggleShowHideSetting(hideRelicNames, relicName, 'relicNameIsHidden')
-toggleShowHideSetting(showStats, relicStatResult, 'statIsHidden')
-toggleShowHideSetting(hideCappedRelics, cappedRelics, 'cappedRelicIsHidden')
+// Dark Lord Relic Option
 
+const displaySpoilerRelic = () => {
+  spoilerRelic.classList.toggle('hidden')
+  let isSpoilerShown;
+  if (spoilerRelic.classList.contains('hidden')) { isSpoilerShown = false; }
+  if (!spoilerRelic.classList.contains('hidden')) { isSpoilerShown = true; }
+  localStorage.setItem('isSpoilerShown', isSpoilerShown)
+}
+
+const loadSpoilerRelicStateFromLs = (isActive) => {
+  if (isActive == false) { spoilerRelic.classList.add('hidden') }
+  if (isActive == true) { spoilerRelic.classList.remove('hidden') }
+}
+
+
+stateOfToggleOption(optionToggleRelicNames, relicCardName, 'relicNameIsHidden')
+stateOfToggleOption(optionToggleRelicStats, relicCardStatResult, 'statIsHidden')
+stateOfToggleOption(optionToggleCappedRelics, cappedRelicCard, 'cappedRelicIsHidden')
 
 
 // Local storage
-lsRelicNameIsHidden = JSON.parse(localStorage.getItem('relicNameIsHidden'));
-lsStatIsHidden = JSON.parse(localStorage.getItem('statIsHidden'));
-cappedRelicIsHidden = JSON.parse(localStorage.getItem('cappedRelicIsHidden'));
+let lsRelicNameIsHidden = JSON.parse(localStorage.getItem('relicNameIsHidden'));
+let lsStatIsHidden = JSON.parse(localStorage.getItem('statIsHidden'));
+let cappedRelicIsHidden = JSON.parse(localStorage.getItem('cappedRelicIsHidden'));
+let localStorageSpoilerValue = JSON.parse(localStorage.getItem('isSpoilerShown'));
+
 localStorage.getItem(lsRelicNameIsHidden);
 localStorage.getItem(lsStatIsHidden);
 localStorage.getItem(cappedRelicIsHidden);
 
-lsSetOption(relicName, lsRelicNameIsHidden);
-lsSetOption(relicStatResult, lsStatIsHidden);
-lsSetOption(cappedRelics, cappedRelicIsHidden);
+retrieveOptionNameStateFromLocalStorage(optionToggleRelicNames, 'relicNameIsHidden');
+retrieveOptionNameStateFromLocalStorage(optionToggleRelicStats, 'statIsHidden');
+retrieveOptionNameStateFromLocalStorage(optionToggleCappedRelics, 'cappedRelicIsHidden');
+retrieveOptionNameStateFromLocalStorage(optionToggleSpoilerRelic, 'isSpoilerShown', true);
 
+applyOptionStateFromLocalStorage(relicCardName, lsRelicNameIsHidden);
+applyOptionStateFromLocalStorage(relicCardStatResult, lsStatIsHidden);
+applyOptionStateFromLocalStorage(cappedRelicCard, cappedRelicIsHidden);
+
+optionToggleSpoilerRelic.addEventListener('click', () => {
+  replaceOptionName(optionToggleSpoilerRelic);
+  displaySpoilerRelic();
+});
+loadSpoilerRelicStateFromLs(localStorageSpoilerValue);
 
 
 
 // RESET ALL RELIC LEVES BUTTON
-resetAll.addEventListener('click', () => {
-  for (let relic of mainRelics) {
+resetAllRelicLevels.addEventListener('click', () => {
+  for (let relic of allRelics) {
 
-    levelInput.forEach(elem => {
-      let relicDescription = elem.nextElementSibling.nextElementSibling;
+    levelInput.forEach(input => {
+      let relicStatResult = input.nextElementSibling.nextElementSibling;
       // set to empty because there number 1 in the input field, meaning if i type a number it will always be 142 i.e 1(the first index) won't be removed
-      elem.value = '';
+      input.value = '';
 
       // to access each relic-bonus and change it based on the relic
-      if (elem.id == relic.name) {
+      if (input.id == relic.name) {
         relic.level = 1;
-        relicDescription.innerText = `+${relic.multiplier}${relic.shortDescription}`
-        setLocalStorage(); // RESET LOCAL STORAGE
+        relicStatResult.innerText = `+${relic.multiplier}${relic.shortDescription}`
+        setLocalStorage();
       }
     });
   }
 });
-
-
-// Dark Lord Hide/Show
-// const darkLordRelicCard = document.getElementById('spoilerChar');
-const darkLordRelicCardName = document.getElementById('spoilerChar').children[0];
-const darkLordRelicCardImage = document.getElementById('spoilerChar').children[1];
-const currentText = darkLordRelicCardName.innerText;
-const newText = 'Relic of The Dark Lord';
-
-const revealSpoilerRelic = document.getElementById('revealSpoiler')
-const revealSpoilerRelicText = revealSpoilerRelic.innerText
-
-
-const isSpoilerActive = () => {
-  let spoilerActive;
-  if (darkLordRelicCardName.innerText === currentText) {
-    darkLordRelicCardName.innerText = newText;
-    darkLordRelicCardImage.classList.remove('spoiler');
-    revealSpoilerRelic.innerText = 'Hide Spoiler Relic';
-    spoilerActive = true;
-  } else {
-    darkLordRelicCardName.innerText = currentText;
-    darkLordRelicCardImage.classList.add('spoiler');
-    revealSpoilerRelic.innerText = revealSpoilerRelicText;
-    spoilerActive = false;
-  }
-  localStorage.setItem('spoilerActive', spoilerActive);
-}
-
-revealSpoilerRelic.addEventListener('click', isSpoilerActive);
-
-
-
-// Set local storage
-const localStorageSpoilerChecker = (condition) => {
-  if (condition) {
-    darkLordRelicCardName.innerText = newText;
-    darkLordRelicCardImage.classList.remove('spoiler');
-    revealSpoilerRelic.innerText = 'Hide Spoiler Relic';
-  } else {
-    darkLordRelicCardName.innerText = currentText;
-    darkLordRelicCardImage.classList.add('spoiler');
-    revealSpoilerRelic.innerText = revealSpoilerRelicText;
-  }
-}
-
-localStorageSpoilerChecker(spoilerRelicStored);

@@ -1,0 +1,599 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu&display=swap');
+
+
+// VARIABLES
+$bg-relic-card: rgb(25, 86, 167);
+$element-hovered: rgb(163, 130, 255);
+$test: rgb(233, 236, 10);
+
+
+/* ------------------------ OVERRIDE RULES ------------------------ */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Ubuntu', sans-serif;
+  color: #f3f3f3;
+}
+
+body, html { height: 100%; }
+
+body { background-color: rgb(2, 1, 70); }
+
+a { text-decoration: none; }
+
+ul { list-style: none; }
+
+nav {
+  background: rgb(33, 33, 102);
+  padding: 0 1rem;
+}
+
+textarea:focus, input:focus {
+  outline: none;
+}
+
+// Turn Off Number Input Spinners
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+
+/* ------------------------ UTILITY CLASSES ------------------------ */
+
+.btn-delete {
+  background: $bg-relic-card;
+  margin-left: 0.1rem;
+  padding: .25rem .35rem;
+  font-size: .75rem;
+  border: none;
+  border-radius: 3px;
+  text-align: center;
+  display: none;
+  cursor: pointer;
+
+  &:hover {
+    background: rgb(44, 129, 240);
+  }
+}
+
+.gg {
+  color: red;
+}
+
+.add-level::before { content: '+'; }
+
+.hidden { display: none !important; }
+
+
+
+/* ------------------------ NAVIGATION BAR ------------------------ */
+.menu {
+  display: flex;
+  list-style-type: none;
+  justify-content: space-between;
+  align-items: center;
+
+
+  .menu__logo {
+    letter-spacing: -1px;
+    font-size: 1.3rem;
+  }
+
+  // Logo and Options
+  li a {
+    display: block;
+    padding: 1rem 2rem;
+  }
+
+  .menu--toggle {
+    display: none;
+  }
+
+  // --------------- DROPDOWN MENU ---------------
+  .menu--dropdown {
+    position: relative;
+
+    .dropdown {
+      position: absolute;
+      background: rgb(33, 33, 102);
+      top: 65px;
+      right: 0;
+      border-radius: 5px;
+      padding: 10px 0px;
+      text-align: left;
+      min-width: 250px;
+      display: none;
+
+      .dropdown__item:hover {
+        color: $element-hovered
+      }
+    }
+
+    &.active .dropdown {
+      display: block;
+    }
+
+    .menu--dropdown__toggle:hover {
+      color: $element-hovered;
+    }
+
+    .menu--dropdown__toggle::after {
+      font-family: "Font Awesome 5 Free";
+      content: '\f0d7';
+      font-size: 1.15rem;
+      font-weight: 900;
+      margin-left: .4rem;
+    }
+
+    .menu--dropdown__toggle__mobile {
+      display: none;
+    }
+  }
+}
+
+
+
+
+/* ------------------------ MAIN SECTION ------------------------ */
+
+.main {
+  display: flex;
+  flex-direction: column;
+  margin-top: 2rem;
+  align-items: center;
+
+  // ------------- MAIN TABS -------------
+  .main--tabs {
+    margin-top: 1rem;
+    margin-bottom: 3rem;
+    text-align: center;
+
+    ul {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+
+    ul li {
+      font-size: 2rem;
+      margin: 0.2rem 4rem;
+
+      & a:hover {
+        color: $element-hovered;
+      }
+
+      &.is-active a {
+        color: $element-hovered;
+      }
+    }
+
+    h2 {
+      margin-bottom: 2rem;
+      font-size: 2rem;
+    }
+  }
+
+  // ------------- ACTIVE TAB CONTENT -------------
+  .tab-content {
+    display: none;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 200px));
+    column-gap: 3rem;
+    row-gap: 1rem;
+    max-width: 1200px;
+    justify-items: center;
+    justify-content: center; // MAGIC! That's what prevented full responsiveness
+    padding: 0;
+
+    &.is-active {
+      display: grid;
+    }
+  }
+}
+
+
+
+
+/* ------------------------ RELIC CARD ------------------------ */
+
+.relics--card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 5px;
+  padding: 1rem .75rem;
+  margin: 1.5rem;
+  width: 200px;
+  min-height: 200px;
+
+  // Show the delete button on hover
+  &:hover > .relics--card--stat > .btn-delete {
+    display: block;
+  }
+
+  // Relic of Something
+  .relics--card__name {
+    text-align: center;
+    height: 40px; //
+
+    &.desktop { display: block; }
+    &.mobile { display: none; }
+  }
+
+  .relics--card__img {
+    margin-top: 1rem;
+    transition: 0.2s;
+
+    // Blur the Dark Lord Relic
+    // &.spoiler {
+    //   filter: blur(18px);
+    //   -webkit-filter: blur(18px);
+    // }
+
+    // Animation (move up) on hover
+    &:hover {
+      transform: translate(0, -10px);
+    }
+  }
+
+  // Level: 65523
+  // +445631 MP
+  .relics--card--stat {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+    padding: 0.5rem 0;
+    margin-top: 1rem;
+
+    // Level:
+    .relics--card--stat__level {
+      font-size: 1.2rem;
+    }
+
+    // Level Input
+    .relics--card--stat__level-input {
+      max-width: 5.5rem;
+      font-size: 1.2rem;
+      color: #f6f6f6;
+      background: transparent;
+      border: none;
+      margin: 0 .5rem;
+
+      &::placeholder {
+        color: #f6f6f6;
+      }
+
+      // Hide the placeholder value when the input is active
+      &:focus::placeholder {
+        color: transparent;
+      }
+    }
+
+    // +XX% to Magic Attacks
+    .relics--card--stat__result {
+      // display: block;
+      text-align: center;
+      overflow-wrap: break-word;
+      width: 95%;
+      margin-top: .4rem;
+    }
+  }
+}
+
+
+
+
+
+
+// ########################## TABLETS ##########################
+@media (min-width: 768px) and (max-width: 1024px) {
+  .tab-content {
+    grid-template-columns: repeat(auto-fill, minmax(100px, 220px));
+    column-gap: 3rem;
+  }
+}
+
+
+
+
+
+
+// ########################## MOBILE ##########################
+
+@media all and (max-width: 767px), (max-height: 830px) {
+// ------------------------ NAVIGATION BAR ------------------------
+nav { padding: 0; }
+
+  .menu {
+    flex-wrap: wrap;
+
+    .menu__logo {
+      font-size: 1rem;
+    }
+
+    // --------------- DROPDOWN ---------------
+    .menu--dropdown {
+      position: relative;
+
+      .dropdown {
+        top: 40px;
+        right: 0;
+        border-radius: 0;
+        padding: 10px 0px;
+        text-align: center;
+        width: 100vw;
+        display: none;
+
+        // @for $num from 1 through 5 {
+        //   .dropdown__item-#{$num} {
+        //     animation: rotateX 300ms ($num * 60ms) ease-in-out forwards;
+        //     transform-origin: top center;
+        //   }
+        // }
+
+
+
+        // li {
+        //   // display: none;
+        //   background-color: #34495e;
+        //   padding: 10px 20px;
+        //   opacity: 0
+        // }
+      }
+
+      &.active .dropdown {
+        display: block;
+      }
+
+      .menu--dropdown__toggle { display: none; }
+      .menu--dropdown__toggle::before { content: ''; }
+
+      .menu--dropdown__toggle__mobile {
+        display: block;
+        padding: 1rem 2rem;
+
+        &::after {
+          font-family: "Font Awesome 5 Free";
+          content: '\f0d7';
+          font-size: 1.15rem;
+          font-weight: 900;
+          margin-left: .4rem;
+        }
+      }
+    }
+  }
+
+  // --------------- RELIC TABS ---------------
+  .main {
+    .main--tabs {
+      h2 {
+        margin: 0;
+        font-size: 1.75rem;
+      }
+
+      ul li {
+        margin: 0 1rem;
+        font-size: 1.4rem;
+      }
+    }
+
+    // ------------- ACTIVE TAB CONTENT -------------
+    .tab-content {
+      flex-direction: column;
+      align-items: center;
+      grid-template-columns: repeat(2, 1fr);
+      grid-gap: 0;
+
+      &.is-active {
+        display: grid;
+      }
+    }
+  }
+
+
+  // --------------- RELIC CARD ---------------
+  .relics--card {
+    display: grid;
+    grid-template-columns: 90px 170px; // 90px 170px
+    grid-template-rows: repeat(auto-fill, 40px); // 40px 40px
+    align-items: center;
+    justify-items: start;
+    min-height: 0;
+    margin: 1rem 1rem;
+    // margin-bottom: 1rem;
+    width: 90%;
+
+    .relics--card__name.desktop { display: none; }
+
+    .relics--card__img {
+      width: 60px;
+      grid-column: 1 / 2;
+      grid-row: 1 / auto;
+      justify-self: center;
+      align-self: center;
+      place-self: center;
+      // margin-bottom: 5px;
+    }
+
+    .relics--card--stat {
+      display: grid;
+      grid-template-columns: 40px 130px 30px;
+      grid-template-rows: repeat(auto-fill, 1fr); // 1fr 1fr
+      align-items: center;
+      justify-items: start;
+      grid-column: 2 / 3;
+
+      & > * {
+        // display: none;
+        margin: .2rem 0;
+      }
+
+      .relics--card__name {
+        font-size: 1rem;
+        height: 17px;
+        margin: .2rem 0; // .25rem 0
+        grid-column: 1 / 4; // 2 / 3
+        grid-row: 1 / 2; // 1 / 2
+        text-align: left;
+
+        &.mobile { display: block; }
+      }
+
+      .relics--card--stat__level {
+        font-size: 1rem;
+        text-align: left;
+        grid-column: 1 / 2;
+        grid-row: 2 / 3;
+      }
+
+      .relics--card--stat__level-input {
+        font-size: 1rem;
+        grid-row: 2 / 3;
+        grid-column: 2 / auto;
+      }
+
+      .relics--card--stat__result {
+        font-size: .85rem;
+        text-align: left;
+        grid-column: 1 / 4;
+        grid-row: 3 / auto;
+        overflow-wrap: break-word;
+      }
+
+      .btn-delete {
+        text-align: center;
+        font-size: .6rem;
+        margin: 0;
+        padding: .2rem .4rem;
+        // border-radius: 2px;
+        grid-column: 3 / 4;
+        place-self: center;
+      }
+    }
+  }
+}
+
+
+
+@media all and (max-width: 638px) {
+  .main .tab-content { grid-template-columns: repeat(1, 1fr); }
+
+  .relics--card { grid-template-columns: 90px auto; }
+
+  .relics--card .relics--card--stat { grid-template-columns: 40px 150px 30px; }
+}
+
+
+
+@media all and (max-width: 367px) {
+  .main .main--tabs ul {
+    padding: 2rem 0;
+
+    li {
+      margin: 0 .65rem;
+      font-size: 1.3rem;
+    }
+  }
+
+  .relics--card {
+    padding: 1rem 0.3rem;
+  }
+}
+
+
+@media all and (max-width: 356px) {
+  .menu li a {
+    padding: 1rem 0;
+    margin-left: .75rem;
+  }
+
+  .menu .menu--dropdown .menu--dropdown__toggle__mobile {
+    padding: 1rem 1.5rem;
+
+    &::after {
+      margin: 0;
+    }
+  }
+
+  .relics--card {
+    grid-template-columns: 50px 170px; // 90px 170px
+
+    .relics--card__img {
+      width: 55px;
+    }
+
+    .relics--card--stat {
+      grid-template-columns: 40px 120px 25px;
+      margin-left: 1rem;
+    }
+
+    .relics--card__name {
+      font-size: .9rem;
+      margin-left: .5rem;
+    }
+  }
+
+}
+
+@media all and (max-width: 296px) {
+  .menu {
+    justify-content: space-between;
+    .menu__logo {
+      margin-left: .4rem;
+    }
+  }
+
+  .menu li a {
+    margin: 0;
+  }
+
+  .menu .menu--dropdown {
+    padding: 0;
+  }
+
+  .menu--dropdown__toggle__mobile {
+    padding: 0;
+
+    &::after {
+      padding: 0rem;
+    }
+  }
+
+  .relics--card {
+    grid-template-columns: 40px 150px;
+    .relics--card--stat {
+      grid-template-columns: 40px 100px 30px;
+      .relics--card__name {
+        font-size: 1rem;
+      }
+
+      .relics--card--stat__level,
+      .relics--card--stat__level-input,
+      .relics--card--stat__result {
+        font-size: .9rem;
+      }
+    }
+  }
+}
+
+@media all and (max-width: 256px) {
+  .main .main--tabs ul {
+    flex-direction: column;
+
+    li {
+      margin: .25rem 0;
+    }
+  }
+}
